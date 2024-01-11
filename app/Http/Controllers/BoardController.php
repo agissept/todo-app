@@ -36,10 +36,20 @@ class BoardController extends Controller
         return redirect()->route('board.show');
     }
 
-    public function edit()
+    public function edit(int $id, Request $request)
     {
-        return view('boards.index');
+        $board = Board::find($id);
+        $board->name = $request->board_name;
+        $board->description = $request->board_description;
+        $board->save();
+        return redirect()->route('board.show');
     }
 
+    public function delete($id): RedirectResponse
+    {
+        $board = Board::find($id);
+        $board->delete();
+        return redirect()->route('board.show');
+    }
 
 }

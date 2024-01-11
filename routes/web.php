@@ -33,8 +33,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/boards', [BoardController::class, 'show'])->name('board.show');
     Route::post('/boards', [BoardController::class, 'store'])->name('board.store');
-    Route::put('/boards', [BoardController::class, 'edit'])->name('board.store');
-    Route::delete('/boards', [BoardController::class, 'delete'])->name('board.store');
+    Route::put('/boards/{id}', [BoardController::class, 'edit'])->name('board.edit');
+    Route::delete('/boards/{id}', [BoardController::class, 'delete'])->name('board.delete');
 
 
     Route::get('/todos', [TodoController::class, 'show'])->name('todo.show');

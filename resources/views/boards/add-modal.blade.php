@@ -19,7 +19,7 @@
                           id="board-description" name="board_description" required></textarea>
             </div>
             <div class="ml-auto w-fit">
-                <button x-on:click="showModalAddBoard = false" class="mt-4 text-black text-white p-2 rounded-md">
+                <button x-on:click="showModalAddBoard = false" class="mt-4 text-black p-2 rounded-md">
                     Batal
                 </button>
                 <button type="submit" class="mt-4 bg-green-500 text-white p-2 rounded-md">Submit</button>
