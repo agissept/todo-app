@@ -11,7 +11,7 @@
         currentBoard: {}
     }">
 
-        <div class="p-5">
+        <div class="p-5 grid grid-cols-5">
             @foreach($boards as $board)
                 <div class="rounded-lg bg-white h-[250px] w-[200px] p-5 relative">
                     <a href="#" class="block w-full h-full">
@@ -33,16 +33,15 @@
                                         name: '{{{ $board->name }}}'
                                     }">Hapus
                         </button>
-                        <div>
-
-                        </div>
-                        @endforeach
-
                     </div>
-
-                    @include('boards.add-modal')
-                    @include('boards.edit-modal')
-                    @include('boards.delete-modal')
                 </div>
+            @endforeach
+
+        </div>
+
+        @include('boards.add-modal')
+        @include('boards.edit-modal')
+        @include('boards.delete-modal')
+    </div>
 
 </x-app-layout>
