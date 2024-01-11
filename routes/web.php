@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BoardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/boards', [BoardController::class, 'show'])->name('board.show');
+    Route::post('/boards', [BoardController::class, 'store'])->name('board.store');
+    Route::put('/boards', [BoardController::class, 'edit'])->name('board.store');
+    Route::delete('/boards', [BoardController::class, 'delete'])->name('board.store');
+
 
     Route::get('/todos', [TodoController::class, 'show'])->name('todo.show');
     Route::post('/todos', [TodoController::class, 'store'])->name('todo.store');
