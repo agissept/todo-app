@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,14 +19,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return redirect()->route('todo.show');
+    })->name('dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/todos', [TodoController::class, 'show'])->name('todo.show');
+    Route::post('/todos', [TodoController::class, 'store'])->name('todo.store');
+    Route::put('/todos/{id}', [TodoController::class, 'edit'])->name('todo.edit');
+    Route::delete('/todos/{id}', [TodoController::class, 'delete'])->name('todo.delete');
+    Route::post('/todos/{id}/complete', [TodoController::class, 'complete'])->name('todo.complete');
+    Route::delete('/todos/{id}/uncompleted', [TodoController::class, 'uncompleted'])->name('todo.uncompleted');
 });
+
 
 require __DIR__.'/auth.php';
