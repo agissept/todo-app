@@ -14,7 +14,7 @@
         <div class="p-5 grid grid-cols-5">
             @foreach($boards as $board)
                 <div class="rounded-lg bg-white h-[250px] w-[200px] p-5 relative">
-                    <a href="#" class="block w-full h-full">
+                    <a href="{{{ route('todo.show', ['boardId' => $board->id]) }}}" class="block w-full h-full">
                         <h3 class="text-2xl font-semibold">{{{ $board->name }}}</h3>
                         <p class="font-thin text-sm text-gray-500">Owner: {{{ $board->username }}}</p>
                         <p class="mt-5">{{{ $board->description }}}</p>

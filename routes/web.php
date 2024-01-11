@@ -36,13 +36,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/boards/{id}', [BoardController::class, 'edit'])->name('board.edit');
     Route::delete('/boards/{id}', [BoardController::class, 'delete'])->name('board.delete');
 
-
-    Route::get('/todos', [TodoController::class, 'show'])->name('todo.show');
-    Route::post('/todos', [TodoController::class, 'store'])->name('todo.store');
-    Route::put('/todos/{id}', [TodoController::class, 'edit'])->name('todo.edit');
-    Route::delete('/todos/{id}', [TodoController::class, 'delete'])->name('todo.delete');
-    Route::post('/todos/{id}/complete', [TodoController::class, 'complete'])->name('todo.complete');
-    Route::delete('/todos/{id}/uncompleted', [TodoController::class, 'uncompleted'])->name('todo.uncompleted');
+    Route::get('/boards/{boardId}/todos', [TodoController::class, 'show'])->name('todo.show');
+    Route::post('/boards/{boardId}/todos', [TodoController::class, 'store'])->name('todo.store');
+    Route::put('/boards/{boardId}/todos/{id}', [TodoController::class, 'edit'])->name('todo.edit');
+    Route::delete('/boards/{boardId}/todos/{id}', [TodoController::class, 'delete'])->name('todo.delete');
+    Route::post('/boards/{boardId}/todos/{id}/complete', [TodoController::class, 'complete'])->name('todo.complete');
+    Route::delete('/boards/{boardId}/todos/{id}/uncompleted', [TodoController::class, 'uncompleted'])->name('todo.uncompleted');
 });
 
 

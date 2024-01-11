@@ -4,7 +4,7 @@
     </button>
 
     <div x-show="showModalAddTodo" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-        <form method="post" action="{{{ route('todo.store') }}}" class="bg-white p-6 rounded-md shadow-md w-[500px]"
+        <form method="post" action="{{{ route('todo.store', ['boardId' => $boardId]) }}}" class="bg-white p-6 rounded-md shadow-md w-[500px]"
               x-on:click.outside="showModalAddTodo = false">
             @csrf
             <h2 class="text-xl font-semibold mb-4">Tambahkan Todo</h2>

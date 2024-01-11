@@ -12,6 +12,7 @@
     <div x-data="{
     showModalEditTodo: false,
     showModalDeleteTodo: false,
+    currentBoardId: '{{{ $boardId }}}}',
     currentTodo: {
         deadline: null
         }
@@ -28,7 +29,7 @@
                                 <p class="font-thin text-sm text-gray-500">Owner: {{{ $todo->username }}}</p>
                                 <p class="mt-3">{{{ $todo->description }}}</p>
                                 <div class="mt-auto flex flex-col">
-                                    <form method="post" action="{{{ route('todo.complete', ['id' => $todo->id]) }}}">
+                                    <form method="post" action="{{{ route('todo.complete', ['id' => $todo->id, 'boardId' => $boardId]) }}}">
                                         @csrf
                                         <button class="w-full bg-green-500 px-3 py-1 rounded-md text-white mt-1">
                                             Selesaikan
@@ -65,7 +66,7 @@
 
                                 <p class="mt-3">{{{ $todo->description }}}</p>
                                 <div class="mt-auto flex flex-col">
-                                    <form method="post" action="{{{ route('todo.uncompleted', ['id' => $todo->id]) }}}">
+                                    <form method="post" action="{{{ route('todo.uncompleted', ['id' => $todo->id, 'boardId' => $boardId]) }}}">
                                         @method('delete')
                                         @csrf
                                         <button class="w-full bg-green-500 px-3 py-1 rounded-md text-white mt-1">Belum

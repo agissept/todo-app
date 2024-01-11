@@ -33,7 +33,7 @@ class Todo extends Model
     use HasFactory;
 
     protected $table = 'todos';
-    protected $fillable = ['name', 'description', 'deadline', 'owner'];
+    protected $fillable = ['name', 'description', 'deadline', 'owner', 'board_id'];
 
     protected $attributes = [
         'status' => false
