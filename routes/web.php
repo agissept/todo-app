@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BoardController;
+use App\Http\Controllers\CollaboratorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/boards/{boardId}/todos/{id}', [TodoController::class, 'delete'])->name('todo.delete');
     Route::post('/boards/{boardId}/todos/{id}/complete', [TodoController::class, 'complete'])->name('todo.complete');
     Route::delete('/boards/{boardId}/todos/{id}/uncompleted', [TodoController::class, 'uncompleted'])->name('todo.uncompleted');
+
+    Route::post('/boards/{boardId}/collaborators', [CollaboratorController::class, 'store'])->name('collaborator.store');
 });
 
 

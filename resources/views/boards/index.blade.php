@@ -8,6 +8,7 @@
     <div x-data="{
         showModalEditBoard: false,
         showModalDeleteBoard: false,
+        showModalAddCollaborator: false,
         currentBoard: {}
     }">
 
@@ -33,6 +34,11 @@
                                         name: '{{{ $board->name }}}'
                                     }">Hapus
                         </button>
+                        <button class="bg-green-500 px-3 py-1 rounded-md text-white mt-1" @click="showModalAddCollaborator = true;
+                                    currentBoard = {
+                                        id: '{{{ $board->id }}}'
+                                    }">Tambah Kolaborator
+                        </button>
                     </div>
                 </div>
             @endforeach
@@ -42,6 +48,7 @@
         @include('boards.add-modal')
         @include('boards.edit-modal')
         @include('boards.delete-modal')
+        @include('boards.add-collaborators-modal')
     </div>
 
 </x-app-layout>
