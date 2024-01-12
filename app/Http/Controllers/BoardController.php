@@ -4,16 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\UserRole;
 use App\Models\Board;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class BoardController extends Controller
 {
     public function show()
     {
-        $boards = Board::query()->join('users', 'users.id', '=', 'owner');
-        if (!UserRole::isAdmin()){
-            $boards->where('owner', auth()->id());
+        $boards = Board::query()
+            ->join('users', 'users.id', '=', 'owner')
+            ->leftJoin('collaborators', 'collaborators.board_id', '=', 'boards.id');
+
+        if (!UserRole::isAdmin()) {
+            $boards->orWhere(function (Builder $query) {
+                $query->where('owner', '=', auth()->id())
+                    ->orWhere('collaborators.user_id','=', auth()->id());
+            });
         }
+
         $boards = $boards->get([
             'boards.id',
             'users.name as username',
