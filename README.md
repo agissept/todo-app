@@ -14,3 +14,13 @@
 * Jalankan `composer install` dan `./sail npm install`
 * Jalankan `./sail artisan migrate`
 * Jalankan `./sail up -d` dan `/sail npm run dev`
+
+
+## db.sql
+Terdapat file database yang bisa Anda gunakan, sebagai initial data. Jika database ini telah dimport Anda bisa login menggunakan akun yang sudah ada. Daftar akun
+* admin@gmail.com
+* abdul@gmail.com
+* asep@gmail.com
+* lukman@gmail.com
+
+Semua passwordnya adalah `12345678`
