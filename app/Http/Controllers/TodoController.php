@@ -5,12 +5,26 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserRole;
 use App\Models\Board;
 use App\Models\Todo;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\DB;
 
 class TodoController extends Controller
 {
+
+    public function __construct(
+        private readonly Request $request
+    ) {
+    }
+
+    /**
+     * @throws AuthorizationException
+     */
     public function show(int $boardId): View
     {
         $todos = Todo::query()
@@ -26,14 +40,11 @@ class TodoController extends Controller
                 ]
             )->where('board_id', $boardId);
 
-        $board = Board::find($boardId);
-        if (!UserRole::isAdmin()) {
-            $todos->where('owner', auth()->id());
-        }
+        $this->authorizeBoard();
 
         return view('todos.index', [
             'todos' => $todos->get(),
-            'board' => $board
+            'board' => $this->getBoard()
         ]);
     }
 
@@ -81,5 +92,32 @@ class TodoController extends Controller
         $todo->status = false;
         $todo->save();
         return redirect()->route('todo.show', ['boardId' => $boardId]);
+    }
+
+    private function authorizeBoard(): void
+    {
+        $board = $this->getBoard();
+        $collaborators = explode(',', $board->collaborators);
+
+        if (UserRole::isAdmin()) {
+            return;
+        }
+
+        if ($board->owner !== auth()->id() && !in_array(auth()->id(), $collaborators, false)) {
+            throw new AuthorizationException('Anda tidak berhak mengakses board ini');
+        }
+    }
+
+    private function getBoard(): Model|Collection|Builder|array|null
+    {
+        $boardId = $this->request->segment(2);
+
+        return Board::query()
+            ->leftJoin('collaborators', 'collaborators.board_id', '=', 'boards.id')
+            ->groupBy('boards.id')
+            ->select([
+                'boards.*',
+                DB::raw('GROUP_CONCAT(collaborators.user_id) as collaborators')
+            ])->find($boardId);
     }
 }
