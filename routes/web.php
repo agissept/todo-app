@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', static fn ()=> view('landing-page.index'));
+
 Route::middleware('auth')->group(callback: function () {
     Route::get('/dashboard', static fn() => redirect()->route('board.show'))->name('dashboard');
 
