@@ -6,6 +6,7 @@ use App\Http\Resources\UserRole;
 use App\Models\Board;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BoardController extends Controller
 {
@@ -15,19 +16,23 @@ class BoardController extends Controller
             ->join('users', 'users.id', '=', 'owner')
             ->leftJoin('collaborators', 'collaborators.board_id', '=', 'boards.id');
 
+
         if (!UserRole::isAdmin()) {
             $boards->orWhere(function (Builder $query) {
                 $query->where('owner', '=', auth()->id())
-                    ->orWhere('collaborators.user_id','=', auth()->id());
+                    ->orWhere('collaborators.user_id', '=', auth()->id());
             });
         }
 
-        $boards = $boards->get([
-            'boards.id',
-            'users.name as username',
-            'boards.name',
-            'boards.description',
-        ]);
+        $boards = $boards->groupBy('boards.id')
+            ->select([
+                'boards.id',
+                'users.name as username',
+                'boards.name',
+                'boards.description',
+                DB::raw('(SELECT GROUP_CONCAT(user_id) FROM collaborators where collaborators.board_id = boards.id) as collaborators')
+            ])->get();
+        dd($boards);
         return view('boards.index', [
             'boards' => $boards
         ]);
