@@ -17,14 +17,18 @@ use Illuminate\Support\Facades\DB;
 class TodoController extends Controller
 {
 
-    public function __construct(
-        private readonly Request $request
-    ) {
-    }
-
     /**
      * @throws AuthorizationException
      */
+    public function __construct(
+        private readonly Request $request
+    ) {
+        $this->middleware(function ($request, $next) {
+            $this->authorizeBoard();
+            return $next($request);
+        });
+    }
+
     public function show(int $boardId): View
     {
         $todos = Todo::query()
@@ -39,8 +43,6 @@ class TodoController extends Controller
                     'status'
                 ]
             )->where('board_id', $boardId);
-
-        $this->authorizeBoard();
 
         return view('todos.index', [
             'todos' => $todos->get(),
