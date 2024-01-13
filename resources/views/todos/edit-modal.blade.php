@@ -1,6 +1,6 @@
 <div x-cloak x-show="showModalEditTodo" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
     <form method="post" class="bg-white p-6 rounded-md shadow-md w-[500px]"
-          x-bind:action="'/boards/{{{ $boardId }}}/todos/' + currentTodo.id"
+          x-bind:action="'/boards/{{{ $board->id }}}/todos/' + currentTodo.id"
           x-on:click.outside="showModalEditTodo = false">
         @csrf
         @method('put')

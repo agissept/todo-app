@@ -4,7 +4,7 @@
         <div class="ml-auto w-fit">
             <button x-on:click="showModalDeleteTodo = false" class="mt-4 text-black p-2 rounded-md">Batal</button>
 
-            <form method="post" x-bind:action="'/boards/{{{ $boardId }}}/todos/' + currentTodo.id" class="inline">
+            <form method="post" x-bind:action="'/boards/{{{ $board->id }}}/todos/' + currentTodo.id" class="inline">
                 @csrf
                 @method('delete')
                 <button type="submit" class="mt-4 bg-red-500 text-white p-2 rounded-md">Hapus</button>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserRole;
+use App\Models\Board;
 use App\Models\Todo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -24,13 +25,15 @@ class TodoController extends Controller
                     'status'
                 ]
             )->where('board_id', $boardId);
+
+        $board = Board::find($boardId);
         if (!UserRole::isAdmin()) {
             $todos->where('owner', auth()->id());
         }
 
         return view('todos.index', [
             'todos' => $todos->get(),
-            'boardId' => $boardId
+            'board' => $board
         ]);
     }
 
