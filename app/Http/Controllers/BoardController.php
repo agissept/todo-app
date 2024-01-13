@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\UserRole;
 use App\Models\Board;
+use App\Models\Collaborator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,9 +31,19 @@ class BoardController extends Controller
                 'users.name as username',
                 'boards.name',
                 'boards.description',
-                DB::raw('(SELECT GROUP_CONCAT(user_id) FROM collaborators where collaborators.board_id = boards.id) as collaborators')
             ])->get();
-        dd($boards);
+
+
+        foreach ($boards as $board){
+            $board->collaborators = Collaborator::query()
+                ->join('users', 'users.id', '=', 'user_id')
+                ->where('board_id', $board->id, 'id')
+                ->get([
+                    'user_id as id',
+                    'users.name as name'
+                ]);
+        }
+
         return view('boards.index', [
             'boards' => $boards
         ]);

@@ -18,6 +18,10 @@
                     <a href="{{{ route('todo.show', ['boardId' => $board->id]) }}}" class="block w-full h-full">
                         <h3 class="text-2xl font-semibold">{{{ $board->name }}}</h3>
                         <p class="font-thin text-sm text-gray-500">Owner: {{{ $board->username }}}</p>
+                        @if(!empty($board->collaborators->toArray()))
+                            <p class="font-thin text-sm text-gray-500">
+                                Collaborators: {{{ implode(',', array_column($board->collaborators->toArray(), 'name')) }}}</p>
+                        @endif
                         <p class="mt-5">{{{ $board->description }}}</p>
 
                     </a>
