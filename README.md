@@ -18,9 +18,9 @@
 
 ## db.sql
 Terdapat file database yang bisa Anda gunakan, sebagai initial data. Jika database ini telah dimport Anda bisa login menggunakan akun yang sudah ada. Daftar akun
-* admin@gmail.com
 * abdul@gmail.com
 * asep@gmail.com
 * lukman@gmail.com
 
 Semua passwordnya adalah `12345678`
+Kemudian ada ada username `admin` dengan password `admin`

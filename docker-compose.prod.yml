@@ -1,0 +1,19 @@
+services:
+  todoapp-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: todoapp
+    volumes:
+      - '.:/var/www/html'
+  nginx:
+    image: nginx:alpine
+    container_name: todoapp-nginx
+    restart: unless-stopped
+    ports:
+      - 4444:80
+    volumes:
+      - '.:/var/www/html'
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    depends_on:
+      - todoapp-web
