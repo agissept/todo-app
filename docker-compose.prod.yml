@@ -6,6 +6,8 @@ services:
     image: todoapp
     volumes:
       - '.:/var/www/html'
+    ports:
+      - 9000:9000
   nginx:
     image: nginx:alpine
     container_name: todoapp-nginx
