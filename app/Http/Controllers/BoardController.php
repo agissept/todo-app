@@ -25,7 +25,7 @@ class BoardController extends Controller
             });
         }
 
-        $boards = $boards->groupBy('boards.id')
+        $boards = $boards->groupBy('boards.id', 'users.name')
             ->select([
                 'boards.id',
                 'users.name as username',
